@@ -1,15 +1,15 @@
+//Ajout de dotenv pour sécuriser les identifiants mongoose
+require("dotenv").config({ path: "../.env" });
 //Fichier de l'application express qui va dialoguer averc l'application frontend depuis le serveur server.js
 const express = require("express");
 //création de l'appli express avec la méthode "express"
 const app = express();
 const mongoose = require("mongoose");
-//Ajout de dotenv pour sécuriser les identifiants mongoose
-const dotenv = require("dotenv").config();
 const path = require("path");
 //Ajout de "helmet" pour aider à sécuriser les applications Express en définissant divers en-têtes HTTP
 const helmet = require("helmet");
 app.use(helmet());
-
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 //Ajout des fichiers routes
 const userRoutes = require("./routes/user");
 const sauceRoutes = require("./routes/sauce");
@@ -18,6 +18,7 @@ var cors = require("cors");
 app.use(cors());
 //pour nous donner accès au corps de la requête
 app.use(express.json());
+
 mongoose
   .connect(
     `mongodb+srv://${process.env.USER}:${process.env.MDP}@cluster0.w4kb9px.mongodb.net/?retryWrites=true&w=majority`,
