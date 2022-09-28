@@ -42,7 +42,7 @@ testem.log
 Thumbs.db
 
 # Dossier images des sauces
-/backend/images/*
+# /backend/images/*
 
 # Fichier .env pour la sécurité
 .env
