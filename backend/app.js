@@ -28,7 +28,7 @@ mongoose
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 
 //Permet de gérer la sécurité entre le serveur du back et celui du front => ici on autorise certains accès
-/**app.use((req, res, next) => {
+app.use((req, res, next) => {
   //d'autoriser l'accès à notre API depuis n'importe quelle origine '*'
   res.setHeader("Access-Control-Allow-Origin", "*");
   //d'ajouter les headers mentionnés aux requêtes envoyées vers notre API
@@ -42,7 +42,7 @@ mongoose
     "GET, POST, PUT, DELETE, PATCH, OPTIONS"
   );
   next();
-});**/
+});
 
 //début de route utilisé pour le login / signup
 app.use("/api/auth", userRoutes);

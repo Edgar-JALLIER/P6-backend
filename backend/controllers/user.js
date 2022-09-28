@@ -2,6 +2,7 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 //package pour vérifier les tokens d'authentification
 const jwt = require("jsonwebtoken");
+require("dotenv").config({ path: "../../.env" });
 
 exports.signup = (req, res, next) => {
   console.log(req.body);
@@ -52,9 +53,13 @@ exports.login = (req, res, next) => {
               // fonction "sign" pour mettre des données à encoder => chiffrer un nouveau token, le token contient l'ID de l'utilisateur en tant que payload
               // chaine secrete pour crypter notre token => en remplacer par une chaine aléatoire
               // validité du token est de 24h
-              token: jwt.sign({ userId: user._id }, "RANDOM_TOKEN_SECRET", {
-                expiresIn: "24h",
-              }),
+              token: jwt.sign(
+                { userId: user._id },
+                `${process.env.KEY_TOKEN}`,
+                {
+                  expiresIn: "24h",
+                }
+              ),
             });
           })
           .catch((error) => res.status(500).json({ error }));

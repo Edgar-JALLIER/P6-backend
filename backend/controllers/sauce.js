@@ -6,7 +6,6 @@ const fs = require("fs");
 exports.createSauce = (req, res, next) => {
   //il faut parse l'objet requête => JSON vers JS
   const sauceInfos = JSON.parse(req.body.sauce);
-  console.log(sauceInfos);
   //supprimer dans cette objet l'id puisqu'il est généré automatiquement par la BDD
   delete sauceInfos._id;
   //supprimer le champ userId puisque il est possible d'utiliser le meme userId pour se faire passer pour quelqu'un d'autre
