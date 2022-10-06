@@ -1,3 +1,4 @@
+// Package de validation pour prévalider les informations avant de les enregistrer
 const uniqueValidator = require("mongoose-unique-validator");
 const mongoose = require("mongoose");
 

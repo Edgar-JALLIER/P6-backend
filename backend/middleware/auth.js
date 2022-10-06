@@ -14,7 +14,6 @@ module.exports = (req, res, next) => {
     req.auth = {
       userId: userId,
     };
-    //permet de passer à la prochaine middleware
     next();
   } catch (error) {
     res.status(401).json({ error });

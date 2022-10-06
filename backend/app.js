@@ -44,7 +44,7 @@ app.use((req, res, next) => {
   next();
 });
 
-//début de route utilisé pour le login / signup
+//début de route utilisé pour le login + sauces + images
 app.use("/api/auth", userRoutes);
 app.use("/api/sauces", sauceRoutes);
 app.use("/images", express.static(path.join(__dirname, "images")));

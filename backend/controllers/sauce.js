@@ -45,6 +45,7 @@ exports.modifySauce = (req, res, next) => {
           req.file.filename
         }`,
       }
+      
     : //si non, alors je prend tout le reste
       { ...req.body };
   //pour la sécurité il faut supprimer le user-Id venant de la requête puisque sinon quelqu'un pourrait modifier le user-Id et asigner un objet à une autre personne

@@ -48,16 +48,15 @@ exports.login = (req, res, next) => {
                 .status(401)
                 .json({ message: "Paire identifiant/mot de passe incorrecte" });
             }
+            //Si c'est valide et que le MDP corresspond bien à la BDD alors :
             res.status(200).json({
               userId: user._id,
               // fonction "sign" pour mettre des données à encoder => chiffrer un nouveau token, le token contient l'ID de l'utilisateur en tant que payload
-              // chaine secrete pour crypter notre token => en remplacer par une chaine aléatoire
-              // validité du token est de 24h
               token: jwt.sign(
                 { userId: user._id },
-                `${process.env.KEY_TOKEN}`,
+                `${process.env.KEY_TOKEN}`,// chaine secrete pour crypter notre token => en remplacer par une chaine aléatoire
                 {
-                  expiresIn: "24h",
+                  expiresIn: "24h",// validité du token est de 24h
                 }
               ),
             });
