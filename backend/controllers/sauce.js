@@ -45,7 +45,6 @@ exports.modifySauce = (req, res, next) => {
           req.file.filename
         }`,
       }
-      
     : //si non, alors je prend tout le reste
       { ...req.body };
   //pour la sécurité il faut supprimer le user-Id venant de la requête puisque sinon quelqu'un pourrait modifier le user-Id et asigner un objet à une autre personne
@@ -124,24 +123,29 @@ exports.likeSauce = (req, res, next) => {
 
   switch (like) {
     case 1:
-      Sauce.updateOne(
-        { _id: sauceId },
-        { $push: { usersLiked: userId }, $inc: { likes: +1 } }
-      )
-        .then(() => {
-          res.status(200).json({ message: "Like ajouté" });
-          test = res;
-        })
-        .catch((error) => res.status(400).json({ error }));
+      Sauce.findOne({ _id: sauceId }).then((sauce) => {
+        if (!sauce.usersLiked.includes(userId)) {
+          Sauce.updateOne(
+            { _id: sauceId },
+            { $push: { usersLiked: userId }, $inc: { likes: +1 } }
+          )
+            .then(() => res.status(200).json({ message: "Like ajouté" }))
+            .catch((error) => res.status(400).json({ error }));
+        }
+      });
       break;
 
     case -1:
-      Sauce.updateOne(
-        { _id: sauceId },
-        { $push: { usersDisliked: userId }, $inc: { dislikes: +1 } }
-      )
-        .then(() => res.status(200).json({ message: "Dislike ajouté" }))
-        .catch((error) => res.status(400).json({ error }));
+      Sauce.findOne({ _id: sauceId }).then((sauce) => {
+        if (!sauce.usersDisliked.includes(userId)) {
+          Sauce.updateOne(
+            { _id: sauceId },
+            { $push: { usersDisliked: userId }, $inc: { dislikes: +1 } }
+          )
+            .then(() => res.status(200).json({ message: "Dislike ajouté" }))
+            .catch((error) => res.status(400).json({ error }));
+        }
+      });
       break;
 
     case 0:
