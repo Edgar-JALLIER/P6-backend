@@ -124,7 +124,10 @@ exports.likeSauce = (req, res, next) => {
   switch (like) {
     case 1:
       Sauce.findOne({ _id: sauceId }).then((sauce) => {
-        if (!sauce.usersLiked.includes(userId)) {
+        if (
+          !sauce.usersLiked.includes(userId) ||
+          !sauce.usersDisliked.includes(userId)
+        ) {
           Sauce.updateOne(
             { _id: sauceId },
             { $push: { usersLiked: userId }, $inc: { likes: +1 } }
@@ -137,7 +140,10 @@ exports.likeSauce = (req, res, next) => {
 
     case -1:
       Sauce.findOne({ _id: sauceId }).then((sauce) => {
-        if (!sauce.usersDisliked.includes(userId)) {
+        if (
+          !sauce.usersDisliked.includes(userId) ||
+          !sauce.usersLiked.includes(userId)
+        ) {
           Sauce.updateOne(
             { _id: sauceId },
             { $push: { usersDisliked: userId }, $inc: { dislikes: +1 } }
